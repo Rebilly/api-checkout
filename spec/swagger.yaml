@@ -1,246 +1,224 @@
-# This is an **example** API to demontstrate features of OpenAPI specification.
-# It doesn't cover all OpenAPI features. For more full example check out: https://github.com/APIs-guru/petstore_extended
-
-swagger: '2.0'
-# You should specify common part of your endpoints in the following format:
-#   <schemes>://<host><basepath>
-schemes:
-  - http # Remove if your API doesn't support HTTP
-  - https # Remove if your API donsn't support HTTPS
-host: example.com # Replace with your hostname. You can also specify port e.g. example.com:777
-basePath: /api/v1 # Replace with your basePath. Note: SHOULD begin with '/'.
+################################################################################
+swagger: "2.0"
 info:
-  # Describe your API here, you can use GFM (https://guides.github.com/features/mastering-markdown) here
-  description: |
-    This is an **example** API to demontstrate features of OpenAPI specification
-    # Introduction
-    This specification is intended to to be a good starting point for describint your API in 
-    [OpenAPI/Swagger format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).
-    It also demonstrates features of [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo) tool and 
-    [ReDoc](https://github.com/Rebilly/ReDoc) documentation engine. So beyond the standard OpenAPI syntax we use a few 
-    [vendor extensions](https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md).
-    
-    # OpenAPI Specification
-    The goal of The OpenAPI Specification is to define a standard, language-agnostic interface to REST APIs which
-    allows both humans and computers to discover and understand the capabilities of the service without access to source
-    code, documentation, or through network traffic inspection. When properly defined via OpenAPI, a consumer can 
-    understand and interact with the remote service with a minimal amount of implementation logic. Similar to what
-    interfaces have done for lower-level programming, OpenAPI removes the guesswork in calling the service.
-
-  version: '1.0.0' # Your API version
-  # It can be any string but it is better to use semantic versioning: http://semver.org/
-  # Warning: OpenAPI require version to be string, but without quotation YAML can recognize it as number.
-
-  title: Example.com # Replace with your API title
-  # Keep it simple. Don't add "API" or verison at the end of the string.
-
-  termsOfService: 'https://example.com/terms/' # [Optional] Replace with an URL to your ToS
+  version: "1.1"
+  title: "Rebilly Checkout API"
   contact:
-    email: contact@example.com # [Optional] Replace with your contact email
-    url: 'http://example.com/contact' # [Optional] Replace with link to your contact form
+    name: "Rebilly API Support"
+    url: "https://www.rebilly.com/contact/"
+    email: "integrations@rebilly.com"
   license:
-    name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    name: "Rebilly"
+    url: "https://www.rebilly.com/api/license/"
+  termsOfService: "https://www.rebilly.com/terms/"
   x-logo:
-    url: 'https://apis.guru/openapi-template/logo.png'
-externalDocs:
-  description: Find out how to create Github repo for your OpenAPI spec.
-  url: 'https://github.com/Rebilly/generator-openapi-repo'
+    url: 'https://rebilly.github.io/RebillyAPI/rb_apiLogo.svg'
+    backgroundColor: '#0033A0'
+  description: |
+    # Introduction
+    This page is about our hosted checkout pages feature.
+
+    # Authentication
+    When you sign up for an account, you are given your first API key.
+    You can generate additional API keys, and delete API keys (as you may
+    need to rotate your keys in the future). You authenticate to the
+    Rebilly API by providing your secret key in the request header.
+
+    Rebilly offers three forms of authentication:  private key, JSON Web Tokens, and
+    public key.
+    - private key: authenticates each request by searching for the presence
+    of an HTTP header: REB-APIKEY.
+    - JWT: authenticates each request by the HTTP header: Authorization.
+    - public key: authenticates by the HTTP header: REB-AUTH (read more on this below).
+
+    Rebilly also offers JSON Web Tokens (JWT) authentication, where you can control
+    the specific granular permissions and expiration for that JWT.  We call our resource
+    for generating JWT Sessions.
+
+    Never share your secret keys. Keep them guarded and secure.
+
+    <!-- ReDoc-Inject: <security-definitions> -->
+
+################################################################################
+host: "api.rebilly.com"
+basePath: "/v2.1"
+schemes:
+  - "https"
+x-servers:
+  - url: //api.rebilly.com/v2.1
+    description: Live Server
+  - url: //api-sandbox.rebilly.com/v2.1
+    description: Sandbox Server
 produces:
-  # List of mime types your API endpoins can return.
-  # This is a global default. You can OVERWRITE it in each specific operation.
-  # Remove the ones not used in your API
-  - application/json
-  - application/xml
-  - text/csv
-  # you can add any mime type your API produces to the list
+  - "application/json"
 consumes:
-  # List of mime types your API endpoins consumes.
-  # This is a global default. You can OVERWRITE it in each specific operation.
-  # Remove the ones not supported by your API
-  - application/json
-  - application/xml
-  # you can add any mime type your API consumes to the list
-
-# A list of tags used by the specification with additional metadata.
-# The order of the tags can be used to reflect on their order by the parsing tools.
+  - "application/json"
+################################################################################
 tags:
-  - name: Echo
-    description: Example echo operations
-  - name: User
-    description: Operations about user
-# Security scheme definitions that can be used across the specification.
+  - name: Checkout Pages
+    description: |
+      Hosted checkout pages.
+################################################################################
 securityDefinitions:
-  main_auth: # security definition name (you can name it as you want)
-    type: oauth2 # authorization type, one of: oauth2, basic, apiKey
-    # the following options are specific to oauth2 type
-    authorizationUrl: 'http://example.com/api/oauth/dialog'
-    flow: implicit
-    scopes:
-      'read:users': read users info
-      'write:users': modify or remove users
-  api_key: # security definition name (you can name it as you want)
+  ApiKey:
+    description: |
+      When you sign up for an account, you are given your first API key.
+      To do so please follow this link: https://www.rebilly.com/site/signup/
+      Also you can generate additional API keys, and delete API keys (as you may
+      need to rotate your keys in the future).
+    name: "REB-APIKEY"
     type: apiKey
-    # The following options are specific to apiKey type
-    in: header # Where API key will be passed: header or query
-    name: api_key # API key paramteer name
-  basic_auth: # security definition name (you can name it as you want)
+    in: header
+  JWT:
+    description: |
+      You can create a JSON Web Token (JWT) via our Sessions resource.
     type: basic
+  RebAuth:
+    description: |
+      Only for the Tokens resource.
+      The REB-AUTH value is created in this way
+      Generate a Nonce (random string), and a Timestamp (unix timestamp)
+      Concatenate the values of ApiUser, Nonce, and Timestamp (in that order).
+      Use that value as the input data when you calculate the <a href="http://tools.ietf.org/html/rfc2104">HMAC-SHA1</a> with your secret key, called the signature.
+      Forming the four data points into a JSON object.
 
-# Holds the relative paths to the individual endpoints. The path is appended to the
-# basePath in order to construct the full URL. 
-paths:
-  '/users/{username}': # path parameter in curly braces
-    # documentation for GET operation for this path
-    
-    # parameters list that are used with each operation for this path
-    parameters:
-      - name: pretty_print
-        in: query # place where paramter is passed: path, header, query or body, formData
-        description: Pretty print response
-        # type of the paramter: string, number, integer, boolean, array
-        type: boolean
-    get:
-      tags:
-        - User
-      
-      # summary is up to 120 symbold but we recommend to be shortest as possible
-      summary: Get user by user name
-      
-      # you can use GFM in operation description too: https://guides.github.com/features/mastering-markdown
-      description: | 
-        Some description of the operation. 
-        You can use `markdown` here.
-      
-      # operationId should be unique across the whole specification
-      operationId: getUserByName
-      
-      # list of parameters for the operation
-      parameters:
-        - name: username
-          in: path
-          description: 'The name that needs to be fetched'
-          required: true
-          type: string
-        - name: with_email
-          in: query
-          description: Filter users without email
-          type: boolean
-      
-      # security schemas applied to this operation
-      security:
-        - main_auth:
-          - 'read:users' # for auth2 provide list of scopes here
-        - api_key: []
-      # overwriting default global produces
-      produces:
-        - application/json
-      responses: # list of responses
-        '200':
-          description: Success
-          schema: # response schema can be specified for each response
-            $ref: '#/definitions/User'
-          examples:
-          # repsonse samples for each type operation produces
-            application/json:
-              username: user1
-              email: user@example.com
-        '403':
-          description: Forbidden
-        '404':
-          description: User not found
-    # documentation for PUT operation for this path
-    put:
-      tags:
-        - User
-      summary: Updated user
-      description: This can only be done by the logged in user.
-      operationId: updateUser
-      produces:
-        - application/json
-      parameters:
-        - name: username
-          in: path
-          description: The name that needs to be updated
-          required: true
-          type: string
-        - in: body
-          name: body
-          description: Updated user object
-          required: true
-          # for body parameter you should specify request schema instead of type
-          schema:
-            $ref: '#/definitions/User'
-      security:
-        - main_auth:
-          - 'write:users'
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Invalid user supplied
-        '404':
-          description: User not found
-  
-  '/echo':
-    post:
-      tags:
-        - Echo
-      summary: Echo test
-      description: Receive the exact message you've sent
-      operationId: echo
-      parameters:
-        - name: message
-          in: body
-          description: 'Echo payload'
-          required: true
-          schema:
-            type: string
-            example: 'Hello world!'
-      security:
-        - api_key: []
-      responses:
-        '200':
-          description: 'OK'
-          examples:
-            'application/json': 'Hello world!'
-          schema:
-            type: string
-          # docuemnt headers for this repsonse
-          headers:
-            X-Rate-Limit: # Header name
-              type: integer # Header value type
-              format: int32 # Header value format
-              description: calls per hour allowed by the user
-            X-Expires-After:
-              type: string
-              format: date-time
-              description: date in UTC when token expires
-# An object to hold data types that can be consumed and produced by operations.
-# These data types can be primitives, arrays or models.
-definitions:
-  Email:
-    description: User email address
+      ```json
+      {
+        "REB-APIUSER": "abcdefg",
+        "REB-NONCE": "adfsjtreitou345fgkdafgj",
+        "REB-TIMESTAMP": "1382591345",
+        "REB-SIGNATURE": "a234fc95460401cfg09c9d09"
+      }
+      ```
+
+      Then base64 encode that JSON object. This is the final value of the REB-AUTH HTTP header
+    name: "REB-AUTH"
+    type: apiKey
+    in: header
+################################################################################
+security:
+  - ApiKey: []
+################################################################################
+responses:
+  AccessForbidden:
+    description: "Access forbidden, invalid API-KEY was used"
+    schema:
+      $ref: "#/definitions/Error"
+  NotFound:
+    description: "Resource was not found"
+    schema:
+      $ref: "#/definitions/Error"
+  Conflict:
+    description: "Conflict"
+    schema:
+      $ref: "#/definitions/Error"
+  InvalidDataError:
+    description: "Invalid data was sent"
+    schema:
+      $ref: "#/definitions/InvalidError"
+################################################################################
+parameters:
+  resourceId:
+    name: id
+    in: path
+    description: The resource identifier string
     type: string
-    format: email
-    example: john.smith@example.com
-  User:
-    type: object
-    properties:
-      username:
-        description: User supplied username
-        type: string
-        minLength: 4
-        example: John78
-      firstName:
-        description: User first name
-        type: string
-        minLength: 1
-        example: John
-      lastName:
-        description: User last name
-        type: string
-        minLength: 1
-        example: Smith
-      email:
-        $ref: '#/definitions/Email'
+    required: true
+  collectionLimit:
+    name: limit
+    in: query
+    description: The collection items limit
+    type: integer
+    minimum: 0
+    maximum: 1000
+  collectionOffset:
+    name: offset
+    in: query
+    description: The collection items offset
+    type: integer
+    minimum: 0
+  collectionFilter:
+    name: filter
+    in: query
+    type: string
+    description: |
+      The collection items filter requires a special format.
+      Use "," for multiple allowed values.  Use ";" for multiple fields.
+      See the filter guide for more options and examples about this format.
+  collectionQuery:
+    name: q
+    in: query
+    type: string
+    description: The partial search of the text fields.
+  collectionCriteria:
+    name: criteria
+    in: query
+    type: string
+    description: The json criteria for collection
+  collectionSort:
+    name: sort
+    in: query
+    type: array
+    collectionFormat: csv
+    description: The collection items sort field and order (prefix with "-" for descending sort).
+    items:
+      type: string
+  collectionFields:
+    name: fields
+    in: query
+    type: string
+    description: Limit the returned fields to the list specified, separated by comma.  Note that id is always returned.
+  collectionExpand:
+    name: expand
+    in: query
+    type: string
+    description: Expand response to get full related object intead of ID.  See the expand guide for more info.
+  systemEventType:
+    name: eventType
+    in: path
+    description: The event type
+    type: string
+    required: true
+  rulesVersion:
+    name: version
+    in: path
+    type: integer
+    required: true
+    minimum: 1
+    description: The rule set version. Expand response to get full related object instead of ID.  See the expand guide for more info.
+  hash:
+    name: hash
+    in: path
+    description: The token identifier string
+    type: string
+    required: true
+  mediaType:
+    name: Accept
+    in: header
+    type: string
+    enum:
+      - application/json
+    default: application/json
+    description: The response media type
+################################################################################
+headers:
+  Rate-Limit-Limit:
+    description: The number of allowed requests in the current period
+    type: integer
+  Rate-Limit-Remaining:
+    description: The number of remaining requests in the current period
+    type: integer
+  Rate-Limit-Reset:
+    description: |
+      The date in format defined by [RFC 822](https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1)
+      when the current period will reset
+    type: string
+  Pagination-Total:
+    description: Total items count
+    type: integer
+  Pagination-Limit:
+    description: Items per page limit
+    type: integer
+  Pagination-Offset:
+    description: Pagination offset
+    type: integer
