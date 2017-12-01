@@ -51,20 +51,26 @@ properties:
     description: Secure uri for logo.  Recommended to be a .png, .jpg, or .jpeg under 120KB.  You can reference a file public permalink.  If no logo, your website name will appear at the top of the page.
     type: string
   headerBackgroundColor:
-    description: RGB color of the background of the header section of the page.
+    description: HEX color of the background of the header section of the page.
     type: string
     maxLength: 6
   sections:
-    type: array
     description: Sections of background color, font color and content.
-    allOf:
-      backgroundColor:
-        type: string
-      fontColor:
-        type: string
-      content:
-        description: The text you want to appear in the section, written in markdown.
-        type: string
+    type: array
+    items:
+      type: object
+      properties:
+        backgroundColor:
+          description: The HEX color for the background of the section.
+          type: string
+          maxLength: 6
+        fontColor:
+          description: The HEX color for the font in the section.
+          type: string
+          maxLength: 6
+        content:
+          description: The text you want to appear in the section, written in [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
+          type: string
   formFieldCompanyName:
     description: Choose whether a field is hidden, optional, or required.
     type: string
@@ -106,7 +112,7 @@ properties:
       - optional
       - required
   formButtonColor:
-    description: RGB color of the form button color.
+    description: HEX color of the form button color.
     type: string
     maxLength: 6
   formButtonText:
