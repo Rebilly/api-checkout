@@ -51,9 +51,9 @@ properties:
     description: Secure uri for logo.  Recommended to be a .png, .jpg, or .jpeg under 120KB.  You can reference a file public permalink.  If no logo, your website name will appear at the top of the page.
     type: string
   headerBackgroundColor:
-    description: HEX color of the background of the header section of the page.
+    description: HEX color of the background of the header section of the page, starts with `#`.
     type: string
-    maxLength: 6
+    maxLength: 7
   sections:
     description: Sections of background color, font color and content.
     type: array
@@ -61,13 +61,13 @@ properties:
       type: object
       properties:
         backgroundColor:
-          description: The HEX color for the background of the section.
+          description: HEX color of the background color for the section, starts with `#`.
           type: string
-          maxLength: 6
+          maxLength: 7
         fontColor:
-          description: The HEX color for the font in the section.
+          description: HEX color of the font color, starts with `#`.
           type: string
-          maxLength: 6
+          maxLength: 7
         content:
           description: The text you want to appear in the section, written in [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
           type: string
@@ -112,9 +112,9 @@ properties:
       - optional
       - required
   formButtonColor:
-    description: HEX color of the form button color.
+    description: HEX color of the form button color, starts with `#`.
     type: string
-    maxLength: 6
+    maxLength: 7
   formButtonText:
     description: Text you want to appear on your "Submit" button.
     type: string
