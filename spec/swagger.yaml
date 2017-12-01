@@ -57,7 +57,8 @@ consumes:
 tags:
   - name: Checkout Pages
     description: |
-      Hosted checkout pages.
+      Hosted checkout pages can be configured here.  You can customize the theme
+      and content and more that appears on your hosted checkout pages.
 ################################################################################
 securityDefinitions:
   ApiKey:

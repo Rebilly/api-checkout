@@ -4,6 +4,7 @@ required:
   - planId
   - websiteId
   - uriPath
+  - theme
 properties:
   id:
     description: Checkout page identifier string
@@ -11,7 +12,7 @@ properties:
     allOf:
       - $ref: "#/definitions/ResourceId"
   planId:
-    description: Checkout page plan ID
+    description: Checkout page plan ID.  If the plan is deactivated, the submit button on the checkout page will be deactivated and the page will display "Sold Out."
     type: string
     allOf:
       - $ref: "#/definitions/ResourceId"
@@ -25,20 +26,96 @@ properties:
     type: string
     maxLength: 50
   name:
-    description: Checkout page name
+    description: Checkout page name, used for internal display to help you organize your various checkout pages.
     type: string
   isActive:
-    description: If checkout page active
+    description: If checkout page active.  If deactivated, the checkout page uri will result in a 404.
     type: boolean
   redirectUrl:
-    description: Checkout page url
+    description: After a successful checkout, the customer can be redirected to a url of your choice.  If left empty, the customer will remain on the thank you page.
     type: string
   redirectTimeout:
-    description: Checkout page redirect timeout
+    description: The time (in seconds) that the customer will remain on the thank you page before being redirected to the `redirectUrl`.
     type: integer
   allowCustomCustomerId:
-    description: If to enable your own customer ID in requests
+    description: Set to true if you want to supply your own customer ID's in a querystring parameter on your checkout page.
     type: boolean
+  theme:
+    description: Select from pre-designed themes for your checkout page.
+    type: string
+    default: classic
+    enum:
+      - classic
+      - long-copy
+  logoUri:
+    description: Secure uri for logo.  Recommended to be a .png, .jpg, or .jpeg under 120KB.  You can reference a file public permalink.  If no logo, your website name will appear at the top of the page.
+    type: string
+  headerBackgroundColor:
+    description: RGB color of the background of the header section of the page.
+    type: string
+    maxLength: 6
+  sections:
+    type: array
+    description: Sections of background color, font color and content.
+    allOf:
+      backgroundColor:
+        type: string
+      fontColor:
+        type: string
+      content:
+        description: The text you want to appear in the section, written in markdown.
+        type: string
+  formFieldCompanyName:
+    description: Choose whether a field is hidden, optional, or required.
+    type: string
+    default: optional
+    enum:
+      - hidden
+      - optional
+      - required
+  formFieldPhoneNumber:
+    description: Choose whether a field is hidden, optional, or required.
+    type: string
+    default: optional
+    enum:
+      - hidden
+      - optional
+      - required
+  formFieldAddressLine2:
+    description: Choose whether a field is hidden, optional, or required.
+    type: string
+    default: optional
+    enum:
+      - hidden
+      - optional
+      - required
+  formFieldCouponCode:
+    description: Choose whether a field is hidden, optional, or required.
+    type: string
+    default: optional
+    enum:
+      - hidden
+      - optional
+      - required
+  formFieldQuantity:
+    description: Choose whether a field is hidden, optional, or required.  If optional or required, the default value is 1.
+    type: string
+    default: optional
+    enum:
+      - hidden
+      - optional
+      - required
+  formButtonColor:
+    description: RGB color of the form button color.
+    type: string
+    maxLength: 6
+  formButtonText:
+    description: Text you want to appear on your "Submit" button.
+    type: string
+    default: Submit
+  thankYouText:
+    description: A message to display on our hosted "Thank you" page.
+    type: string
   _links:
     type: array
     description: The links related to resource
