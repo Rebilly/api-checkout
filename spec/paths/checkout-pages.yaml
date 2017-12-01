@@ -7,6 +7,18 @@ get:
   parameters:
     - $ref: "#/parameters/collectionLimit"
     - $ref: "#/parameters/collectionOffset"
+    - $ref: "#/parameters/collectionFilter"
+    - $ref: "#/parameters/collectionQuery"
+    - $ref: "#/parameters/collectionExpand"
+    - $ref: "#/parameters/collectionFields"
+    - $ref: "#/parameters/collectionCriteria"
+#    - x-rebillyMerge:
+#        - $ref: "#/parameters/collectionSort"
+#        - items:
+#            x-sortableEnum:
+#              - id
+#              - createdTime
+#              - updatedTime
   responses:
     200:
       description: A list of checkout pages was retrieved successfully

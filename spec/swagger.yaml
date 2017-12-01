@@ -108,14 +108,6 @@ responses:
     description: "Resource was not found"
     schema:
       $ref: "#/definitions/Error"
-  Conflict:
-    description: "Conflict"
-    schema:
-      $ref: "#/definitions/Error"
-  InvalidDataError:
-    description: "Invalid data was sent"
-    schema:
-      $ref: "#/definitions/InvalidError"
 ################################################################################
 parameters:
   resourceId:
@@ -155,14 +147,6 @@ parameters:
     in: query
     type: string
     description: The json criteria for collection
-  collectionSort:
-    name: sort
-    in: query
-    type: array
-    collectionFormat: csv
-    description: The collection items sort field and order (prefix with "-" for descending sort).
-    items:
-      type: string
   collectionFields:
     name: fields
     in: query
@@ -173,33 +157,6 @@ parameters:
     in: query
     type: string
     description: Expand response to get full related object intead of ID.  See the expand guide for more info.
-  systemEventType:
-    name: eventType
-    in: path
-    description: The event type
-    type: string
-    required: true
-  rulesVersion:
-    name: version
-    in: path
-    type: integer
-    required: true
-    minimum: 1
-    description: The rule set version. Expand response to get full related object instead of ID.  See the expand guide for more info.
-  hash:
-    name: hash
-    in: path
-    description: The token identifier string
-    type: string
-    required: true
-  mediaType:
-    name: Accept
-    in: header
-    type: string
-    enum:
-      - application/json
-    default: application/json
-    description: The response media type
 ################################################################################
 headers:
   Rate-Limit-Limit:
