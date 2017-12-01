@@ -1,0 +1,13 @@
+type: object
+properties:
+  backgroundColor:
+    description: HEX color of the background color for the section, starts with `#`.
+    type: string
+    maxLength: 7
+  fontColor:
+    description: HEX color of the font color, starts with `#`.
+    type: string
+    maxLength: 7
+  content:
+    description: The text you want to appear in the section, written in [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).  You can include images.
+    type: string

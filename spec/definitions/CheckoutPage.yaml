@@ -47,78 +47,32 @@ properties:
     enum:
       - classic
       - long-copy
-  logoUri:
-    description: Secure uri for logo.  Recommended to be a .png, .jpg, or .jpeg under 120KB.  You can reference a file public permalink.  If no logo, your website name will appear at the top of the page.
-    type: string
-  headerBackgroundColor:
-    description: HEX color of the background of the header section of the page, starts with `#`.
-    type: string
-    maxLength: 7
+  header:
+    description: What you want to appear in the header of the page, written in [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).  You can include a logo.
+    $ref: "#/definitions/Section"
   sections:
     description: Sections of background color, font color and content.
     type: array
+    uniqueItems: true
     items:
-      type: object
-      properties:
-        backgroundColor:
-          description: HEX color of the background color for the section, starts with `#`.
-          type: string
-          maxLength: 7
-        fontColor:
-          description: HEX color of the font color, starts with `#`.
-          type: string
-          maxLength: 7
-        content:
-          description: The text you want to appear in the section, written in [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
-          type: string
-  formFieldCompanyName:
-    description: Choose whether a field is hidden, optional, or required.
-    type: string
-    default: optional
-    enum:
-      - hidden
-      - optional
-      - required
-  formFieldPhoneNumber:
-    description: Choose whether a field is hidden, optional, or required.
-    type: string
-    default: optional
-    enum:
-      - hidden
-      - optional
-      - required
-  formFieldAddressLine2:
-    description: Choose whether a field is hidden, optional, or required.
-    type: string
-    default: optional
-    enum:
-      - hidden
-      - optional
-      - required
-  formFieldCouponCode:
-    description: Choose whether a field is hidden, optional, or required.
-    type: string
-    default: optional
-    enum:
-      - hidden
-      - optional
-      - required
-  formFieldQuantity:
-    description: Choose whether a field is hidden, optional, or required.  If optional or required, the default value is 1.
-    type: string
-    default: optional
-    enum:
-      - hidden
-      - optional
-      - required
-  formButtonColor:
+      $ref: "#/definitions/Section"
+  fields:
+    description: Take granular control over the default field settings.  You can make specific fields hidden, optional, or required.  You can specify labels and default values.
+    type: array
+    uniqueItems: true
+    items:
+      $ref: "#/definitions/FieldConfig"
+  buttonColor:
     description: HEX color of the form button color, starts with `#`.
     type: string
     maxLength: 7
-  formButtonText:
+  buttonText:
     description: Text you want to appear on your "Submit" button.
     type: string
     default: Submit
+  footer:
+    description: Text you want to appear in the footer of the page, written in [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
+    $ref: "#/definitions/Section"
   thankYouText:
     description: A message to display on our hosted "Thank you" page.
     type: string
