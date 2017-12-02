@@ -70,6 +70,10 @@ properties:
     description: Text you want to appear on your "Submit" button.
     type: string
     default: Submit
+  buttonTextColor:
+    description: HEX color of the form button text, starts with `#`.
+    type: string
+    maxLength: 7
   footer:
     description: Text you want to appear in the footer of the page, written in [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
     $ref: "#/definitions/Section"
