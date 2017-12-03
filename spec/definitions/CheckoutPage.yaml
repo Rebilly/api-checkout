@@ -68,9 +68,9 @@ properties:
   footer:
     description: Text you want to appear in the footer of the page, written in [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
     $ref: "#/definitions/Section"
-  thankYouText:
+  thankYou:
     description: A message to display on our hosted "Thank you" page.
-    type: string
+    $ref: "#/definitions/Section"
   _links:
     type: array
     description: The links related to resource
