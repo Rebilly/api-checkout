@@ -1,4 +1,6 @@
 type: object
+required:
+  - content
 properties:
   backgroundColor:
     description: HEX color of the background color for the section, starts with `#`.

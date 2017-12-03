@@ -1,5 +1,7 @@
 type: object
 description: A configuration for a field.
+required:
+  - name
 properties:
   name:
     description: >
