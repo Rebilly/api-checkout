@@ -50,8 +50,8 @@ properties:
   header:
     description: What you want to appear in the header of the page, written in [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).  You can include a logo.
     $ref: "#/definitions/Section"
-  sections:
-    description: Sections of background color, font color and content.
+  bodySections:
+    description: Sections of background color, font color and content that will display within the page body, typically above the form.
     type: array
     uniqueItems: true
     items:
