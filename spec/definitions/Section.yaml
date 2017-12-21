@@ -1,15 +1,23 @@
 type: object
 required:
+  - name
   - content
+  - style
 properties:
-  backgroundColor:
-    description: HEX color of the background color for the section, starts with `#`.
+  name:
+    description: >
+      Name is a key for this section of content.
     type: string
-    maxLength: 7
-  fontColor:
-    description: HEX color of the font color, starts with `#`.
-    type: string
-    maxLength: 7
+    enum:
+      - header
+      - body
+      - order-summary
+      - button
+      - footer
+      - thank-you
+  style:
+    description: Control the font and background colors.
+    $ref: "#/definitions/Style"
   content:
-    description: The text you want to appear in the section, written in [markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).  You can include images.
+    description: The text you want to appear in the section, can be styled in html markup.  You can include image references.
     type: string

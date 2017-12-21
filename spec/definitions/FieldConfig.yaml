@@ -5,8 +5,15 @@ required:
 properties:
   name:
     description: >
-      The name of the field, as defined in our APIs.  You can also include custom fields. Fields you can control include: `companyName`, `phoneNumber`, `addressLine2`, `couponCode`, `quantity`.
+      The name of the field, as defined in our APIs.
+      You can also include custom fields.
     type: string
+    enum:
+      - companyName
+      - phoneNumber
+      - addressLine2
+      - couponCode
+      - quantity
   setting:
     description: |
       If you want the field hidden, optional, or required.  Some fields may be required by a specific theme, and these settings will not override that.
