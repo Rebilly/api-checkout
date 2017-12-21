@@ -4,7 +4,6 @@ required:
   - planId
   - websiteId
   - urlPathSegment
-  - theme
 properties:
   id:
     description: Checkout page identifier string

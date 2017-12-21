@@ -1,7 +1,4 @@
 type: object
-required:
-  - background
-  - color
 properties:
   background:
     description: HEX color of the background color for the section.
