@@ -3,9 +3,9 @@ parameters:
 get:
   tags:
     - Checkout Pages
-  summary: Retrieve a Checkout Page
+  summary: Read a Checkout Page
   description: |
-    Retrieve a Checkout Page with specified identifier string.
+    Read a Checkout Page.
   responses:
     200:
       description: Checkout Page was retrieved successfully
@@ -18,9 +18,9 @@ get:
 put:
   tags:
     - Checkout Pages
-  summary: Update a Checkout Page
+  summary: Edit a Checkout Page
   description: |
-    Update a Checkout Page.
+    Edit a Checkout Page.
   parameters:
     - name: body
       in: body
@@ -64,7 +64,7 @@ delete:
     - Checkout Pages
   summary: Delete a Checkout Page
   description: |
-    Delete a Checkout Page with predefined identifier string
+    Delete a Checkout Page.
   responses:
     204:
       headers:
