@@ -45,7 +45,7 @@ properties:
         description: The time (in seconds) that the customer will remain on the thank you page before being redirected to the `redirectUrl`.
         type: integer
         default: 5
-  allowCustomCustomerId:
+  isCustomCustomerIdAllowed:
     description: Set to true if you want to supply your own customer ID's in a querystring parameter on your checkout page.
     type: boolean
     default: false
