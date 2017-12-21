@@ -1,12 +1,12 @@
 type: object
 required:
-  - name
+  - section
   - content
   - style
 properties:
-  name:
+  section:
     description: >
-      Name is a key for this section of content.
+      A key for this section of content.
     type: string
     enum:
       - header
