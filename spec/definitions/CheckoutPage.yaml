@@ -28,12 +28,6 @@ properties:
   name:
     description: Checkout page name, used for internal display to help you organize your various checkout pages.
     type: string
-  status:
-    description: If `inactive`, the checkout page url will result in a 404.
-    type: string
-    enum:
-      - active
-      - inactive
   redirect:
     type: object
     description: After a successful checkout, the customer can optionally be redirected to a url of your choice.
@@ -70,6 +64,13 @@ properties:
     uniqueItems: true
     items:
       $ref: "#/definitions/FieldConfig"
+  status:
+    description: If `inactive`, the checkout page url will result in a 404.
+    type: string
+    enum:
+      - active
+      - inactive
+    default: "active"
   _links:
     type: array
     description: The links related to resource
