@@ -117,47 +117,6 @@ parameters:
     description: The resource identifier string
     type: string
     required: true
-  collectionLimit:
-    name: limit
-    in: query
-    description: The collection items limit
-    type: integer
-    minimum: 0
-    maximum: 1000
-  collectionOffset:
-    name: offset
-    in: query
-    description: The collection items offset
-    type: integer
-    minimum: 0
-  collectionFilter:
-    name: filter
-    in: query
-    type: string
-    description: |
-      The collection items filter requires a special format.
-      Use "," for multiple allowed values.  Use ";" for multiple fields.
-      See the filter guide for more options and examples about this format.
-  collectionQuery:
-    name: q
-    in: query
-    type: string
-    description: The partial search of the text fields.
-  collectionCriteria:
-    name: criteria
-    in: query
-    type: string
-    description: The json criteria for collection
-  collectionFields:
-    name: fields
-    in: query
-    type: string
-    description: Limit the returned fields to the list specified, separated by comma.  Note that id is always returned.
-  collectionExpand:
-    name: expand
-    in: query
-    type: string
-    description: Expand response to get full related object intead of ID.  See the expand guide for more info.
 ################################################################################
 headers:
   Rate-Limit-Limit:
