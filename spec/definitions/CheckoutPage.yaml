@@ -35,7 +35,7 @@ properties:
         description: After a successful checkout, the customer can be redirected to a url of your choice.  If left empty, the customer will remain on the thank you page.
         type: string
       timeout:
-        description: The time (in seconds) that the customer will remain on the thank you page before being redirected to the `redirectUrl`.
+        description: The time (in seconds) that the customer will remain on the thank you page before being redirected to the corresponding `url`.
         type: integer
         default: 5
   isCustomCustomerIdAllowed:
