@@ -6,7 +6,7 @@ required:
   - websiteId
 properties:
   id:
-    description: Your own custom url path segment for this checkout page. It will be appended to checkout url https://checkout.rebilly.com/checkout/<id>.
+    description: Your own custom url path segment for this checkout page. It will be appended to checkout url https://checkout.rebilly.com/checkout/`id`.
     type: string
     maxLength: 50
   planId:
