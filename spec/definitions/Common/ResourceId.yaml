@@ -1,4 +1,4 @@
 type: string
-description: Chechout page custom url path segment.
+description: Checkout page custom url path segment.
 maxLength: 50
 example: "your-url-path-segment"
