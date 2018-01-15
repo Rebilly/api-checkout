@@ -1,26 +1,11 @@
 parameters:
   - $ref: "#/parameters/resourceId"
-get:
-  tags:
-    - Checkout Pages
-  summary: Read a Checkout Page
-  description: |
-    Read a Checkout Page.
-  responses:
-    200:
-      description: Checkout Page was retrieved successfully
-      schema:
-        $ref: "#/definitions/CheckoutPage"
-    401:
-      $ref: "#/responses/AccessForbidden"
-    404:
-      $ref: "#/responses/NotFound"
 put:
   tags:
     - Checkout Pages
-  summary: Edit a Checkout Page
+  summary: Add/Edit a Checkout Page
   description: |
-    Edit a Checkout Page.
+    Add/Edit a Checkout Page
   parameters:
     - name: body
       in: body
@@ -59,6 +44,21 @@ put:
       description: Invalid data was sent
       schema:
         $ref: "#/definitions/InvalidError"
+get:
+  tags:
+    - Checkout Pages
+  summary: Read a Checkout Page
+  description: |
+    Read a Checkout Page.
+  responses:
+    200:
+      description: Checkout Page was retrieved successfully
+      schema:
+        $ref: "#/definitions/CheckoutPage"
+    401:
+      $ref: "#/responses/AccessForbidden"
+    404:
+      $ref: "#/responses/NotFound"
 delete:
   tags:
     - Checkout Pages
