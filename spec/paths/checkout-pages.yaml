@@ -26,34 +26,3 @@ get:
           $ref: "#/definitions/CheckoutPage"
     401:
       $ref: "#/responses/AccessForbidden"
-post:
-  tags:
-    - Checkout Pages
-  summary: Add a Checkout Page
-  description: |
-    Add a Checkout Page
-  parameters:
-    - name: body
-      in: body
-      description: Checkout Page resource
-      required: true
-      schema:
-        $ref: "#/definitions/CheckoutPage"
-  responses:
-    201:
-      description: Checkout Page was created
-      headers:
-        Rate-Limit-Limit:
-          $ref: "#/headers/Rate-Limit-Limit"
-        Rate-Limit-Remaining:
-          $ref: "#/headers/Rate-Limit-Remaining"
-        Rate-Limit-Reset:
-          $ref: "#/headers/Rate-Limit-Reset"
-      schema:
-        $ref: "#/definitions/CheckoutPage"
-    401:
-      $ref: "#/responses/AccessForbidden"
-    422:
-      description: Invalid data was sent
-      schema:
-        $ref: "#/definitions/InvalidError"
