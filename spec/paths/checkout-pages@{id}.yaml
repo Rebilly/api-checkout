@@ -1,3 +1,5 @@
+parameters:
+  - $ref: "#/parameters/resourceId"
 put:
   tags:
     - Checkout Pages
@@ -42,8 +44,6 @@ put:
       description: Invalid data was sent
       schema:
         $ref: "#/definitions/InvalidError"
-parameters:
-  - $ref: "#/parameters/resourceId"
 get:
   tags:
     - Checkout Pages
