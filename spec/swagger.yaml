@@ -114,7 +114,7 @@ parameters:
   resourceId:
     name: id
     in: path
-    description: The resource identifier string
+    description: Checkout page custom url path segment
     type: string
     required: true
 ################################################################################
