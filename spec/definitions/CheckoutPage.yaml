@@ -44,6 +44,10 @@ properties:
     description: Set to true if you want to supply your own customer ID's in a querystring parameter on your checkout page.
     type: boolean
     default: false
+  isZeroPriceHidden:
+    description: Set to true if you want to remove line from Order Summary when price equals to $0.00
+    type: boolean
+    default: false
   theme:
     description: Select from pre-designed themes for your checkout page.
     type: string
