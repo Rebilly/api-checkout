@@ -48,6 +48,16 @@ properties:
     description: Set to true if you want to hide billing address on your checkout page.
     type: boolean
     default: false
+  checkoutOtoId: One time offer for checkout page. Reference to Plan ID.
+    description:
+    type: string
+    allOf:
+      - $ref: "#/definitions/ResourceId"
+  thankYouOtoId: One time offer for thank you page. Reference to Plan ID.
+    description:
+    type: string
+    allOf:
+      - $ref: "#/definitions/ResourceId"
   theme:
     description: Select from pre-designed themes for your checkout page.
     type: string
