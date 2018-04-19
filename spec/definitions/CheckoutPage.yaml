@@ -48,6 +48,10 @@ properties:
     description: Set to true if you want to hide billing address on your checkout page.
     type: boolean
     default: false
+  isOtoTiedToQuantity:
+    description: Set to true if you want to tie one time offer to quantity on your checkout page.
+    type: boolean
+    default: false
   suggestedUpgradeId:
     description: Suggested upgrade for checkout page. Reference to Plan ID.
     type: string
