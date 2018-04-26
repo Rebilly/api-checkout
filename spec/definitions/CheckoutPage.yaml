@@ -58,6 +58,10 @@ properties:
     type: string
     allOf:
       - $ref: "#/definitions/ResourceId"
+  isOtoTiedToQuantity:
+    description: Set to true if you want to tie one time offer to quantity on your checkout page.
+    type: boolean
+    default: false
   theme:
     description: Select from pre-designed themes for your checkout page.
     type: string
