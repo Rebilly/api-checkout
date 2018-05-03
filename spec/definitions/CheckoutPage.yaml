@@ -62,6 +62,11 @@ properties:
     description: Set to true if you want to tie one time offer to quantity on your checkout page.
     type: boolean
     default: false
+  suggestedUpgradeId:
+    description: Suggested upgrade for checkout page. Reference to Plan ID.
+    type: string
+    allOf:
+      - $ref: "#/definitions/ResourceId"
   theme:
     description: Select from pre-designed themes for your checkout page.
     type: string
