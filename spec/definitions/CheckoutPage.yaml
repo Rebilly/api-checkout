@@ -67,6 +67,10 @@ properties:
     type: string
     allOf:
       - $ref: "#/definitions/ResourceId"
+  hasProration:
+    description: Set to true if you want to pro rata credits given due change a subscription's plan.
+    type: boolean
+    default: false
   theme:
     description: Select from pre-designed themes for your checkout page.
     type: string
