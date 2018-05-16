@@ -67,7 +67,7 @@ properties:
     type: string
     allOf:
       - $ref: "#/definitions/ResourceId"
-  hasProration:
+  suggestedUpgradeHasProration:
     description: Set to true if you want to pro rata credits given due change a subscription's plan.
     type: boolean
     default: false
