@@ -48,29 +48,45 @@ properties:
     description: Set to true if you want to hide billing address on your checkout page.
     type: boolean
     default: false
-  oneTimeOfferId:
-    description: One time offer for checkout page. Reference to Plan ID.
-    type: string
-    allOf:
-      - $ref: "#/definitions/ResourceId"
-  thankYouOneTimeOfferId:
-    description: One time offer for thank you page. Reference to Plan ID.
-    type: string
-    allOf:
-      - $ref: "#/definitions/ResourceId"
-  isOtoTiedToQuantity:
-    description: Set to true if you want to tie one time offer to quantity on your checkout page.
-    type: boolean
-    default: false
-  suggestedUpgradeId:
-    description: Suggested upgrade for checkout page. Reference to Plan ID.
-    type: string
-    allOf:
-      - $ref: "#/definitions/ResourceId"
-  suggestedUpgradeHasProration:
-    description: Set to true if you want to pro rata credits given due change a subscription's plan.
-    type: boolean
-    default: false
+  oneTimeOffer:
+      type: object
+      description: One time offer for checkout page.
+      properties:
+        planId:
+          description: Reference to Plan ID.
+          type: string
+          allOf:
+            - $ref: "#/definitions/ResourceId"
+        isTiedToQuantity:
+          description: Set to true if you want to tie one time offer to quantity on your checkout page.
+          type: boolean
+          default: false
+  thankYouOneTimeOffer:
+      type: object
+      description: One time offer for thank you page.
+      properties:
+        planId:
+          description: Reference to Plan ID.
+          type: string
+          allOf:
+            - $ref: "#/definitions/ResourceId"
+        isTiedToQuantity:
+          description: Set to true if you want to tie one time offer to quantity on your checkout page.
+          type: boolean
+          default: false
+  suggestedUpgrade:
+      type: object
+      description: Suggested upgrade for checkout page.
+      properties:
+        planId:
+          description: Reference to Plan ID.
+          type: string
+          allOf:
+            - $ref: "#/definitions/ResourceId"
+        hasProration:
+          description: Set to true if you want to pro rata credits given due change a subscription's plan.
+          type: boolean
+          default: false
   theme:
     description: Select from pre-designed themes for your checkout page.
     type: string
@@ -92,6 +108,17 @@ properties:
     uniqueItems: true
     items:
       $ref: "#/definitions/FieldConfig"
+  terms:
+      type: object
+      description: Terms and conditions block.
+      properties:
+        content:
+          description: Content of terms block.
+          type: string
+        enabled:
+          description: Set to true if you want to show terms on checkout page with checkbox to apply it.
+          type: boolean
+          default: false
   status:
     description: If `inactive`, the checkout page url will result in a 404.
     type: string
