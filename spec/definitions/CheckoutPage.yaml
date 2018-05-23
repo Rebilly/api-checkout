@@ -110,14 +110,14 @@ properties:
       $ref: "#/definitions/FieldConfig"
   terms:
       type: object
-      description: Terms and conditions block.
+      description: Terms of use.
       properties:
         content:
           description: Content of terms block.
           type: string
         enabled:
           description: Set to true if you want to show terms on checkout page with checkbox to apply it.
-          type: boolean
+          type: string
           default: false
   status:
     description: If `inactive`, the checkout page url will result in a 404.
