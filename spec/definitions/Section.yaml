@@ -3,6 +3,7 @@ required:
   - section
   - content
   - style
+  - enabled
 properties:
   section:
     description: >
@@ -22,3 +23,7 @@ properties:
   content:
     description: The text you want to appear in the section, can be styled in html markup.  You can include image references.
     type: string
+  enabled:
+    description: Set to false if you want to disable this markup section on checkout page.
+    type: boolean
+    default: true
