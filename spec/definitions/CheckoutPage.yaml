@@ -48,6 +48,10 @@ properties:
     description: Set to true if you want to hide billing address on your checkout page.
     type: boolean
     default: false
+  isPlanSummaryHidden:
+    description: Set to true if you want to hide plan summary on your checkout page.
+    type: boolean
+    default: false
   oneTimeOffer:
       type: object
       description: One time offer for checkout page.
