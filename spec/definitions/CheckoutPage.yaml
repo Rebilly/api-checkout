@@ -98,6 +98,10 @@ properties:
     enum:
       - classic
       - long-copy
+  quantityLabel:
+    description: Checkout page quantity label, used in case you want to customize the quantity field label.
+    type: string
+    maxLength: 255
   markup:
     description: |
       Sections of styled content that will display within the page body, keyed by "section."
