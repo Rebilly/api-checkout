@@ -102,6 +102,18 @@ properties:
     description: Checkout page quantity label, used in case you want to customize the quantity field label.
     type: string
     maxLength: 255
+  quantityType:
+    description: Checkout page quantity type, used in case you want to customize the quantity field type.
+    type: string
+    enum:
+    - selectbox
+    - textinput
+    default: "selectbox"
+  quantityMin:
+    description: Checkout page quantity min, used in case you want to set the minimun quantity.
+    type: integer
+    minimum: 1
+    maximum: 255
   markup:
     description: |
       Sections of styled content that will display within the page body, keyed by "section."
