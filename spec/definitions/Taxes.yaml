@@ -1,0 +1,14 @@
+type: object
+description: A configuration for a tax.
+required:
+  - name
+  - value
+properties:
+  name:
+    description: Tax name
+    type: string
+  value:
+    description: Value of tax.
+    type: number
+    format: float
+
