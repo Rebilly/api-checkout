@@ -1,10 +1,10 @@
 type: object
 description: A configuration for a tax.
 required:
-  - name
+  - label
   - value
 properties:
-  name:
+  label:
     description: Tax name
     type: string
   value:
