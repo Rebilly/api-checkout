@@ -128,6 +128,18 @@ properties:
     uniqueItems: true
     items:
       $ref: "#/definitions/FieldConfig"
+  taxes:
+    type: object
+    description: Taxes, you can specify description and list of name-value items.
+    properties:
+      description:
+        description: Taxes description.
+        type: string
+      items:
+        description: Taxes values.
+        type: array
+        items:
+          $ref: "#/definitions/Taxes"
   status:
     description: If `inactive`, the checkout page url will result in a 404.
     type: string
