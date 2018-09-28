@@ -135,7 +135,7 @@ properties:
       description:
         description: Taxes description.
         type: string
-      taxes:
+      items:
         description: Taxes values.
         type: array
         items:
