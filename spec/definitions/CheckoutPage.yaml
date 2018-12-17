@@ -52,6 +52,10 @@ properties:
     description: Set to true if you want to hide plan summary on your checkout page.
     type: boolean
     default: false
+  isPreCheckedTerms:
+    description: Set to true if you want to pre-checked checkbox of terms on your checkout page.
+    type: boolean
+    default: false
   oneTimeOffer:
       type: object
       description: One time offer for checkout page.
@@ -98,6 +102,14 @@ properties:
     enum:
       - classic
       - long-copy
+  logoAlignment:
+    description: Checkout page logo position.
+    type: string
+    enum:
+      - left
+      - center
+      - right
+    default: "left"
   quantityLabel:
     description: Checkout page quantity label, used in case you want to customize the quantity field label.
     type: string
