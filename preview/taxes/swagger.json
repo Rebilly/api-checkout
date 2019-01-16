@@ -1,0 +1,732 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.1",
+    "title": "Rebilly Checkout API",
+    "contact": {
+      "name": "Rebilly API Support",
+      "url": "https://www.rebilly.com/contact/",
+      "email": "integrations@rebilly.com"
+    },
+    "license": {
+      "name": "Rebilly",
+      "url": "https://www.rebilly.com/api/license/"
+    },
+    "termsOfService": "https://www.rebilly.com/terms/",
+    "x-logo": {
+      "url": "https://rebilly.github.io/RebillyAPI/rb_apiLogo.svg",
+      "backgroundColor": "#0033A0"
+    },
+    "description": "# Introduction\nThis page is about our hosted checkout pages feature.\n\n# Authentication\nWhen you sign up for an account, you are given your first API key.\nYou can generate additional API keys, and delete API keys (as you may\nneed to rotate your keys in the future). You authenticate to the\nRebilly API by providing your secret key in the request header.\n\nRebilly offers three forms of authentication:  private key, JSON Web Tokens, and\npublic key.\n- private key: authenticates each request by searching for the presence\nof an HTTP header: REB-APIKEY.\n- JWT: authenticates each request by the HTTP header: Authorization.\n- public key: authenticates by the HTTP header: REB-AUTH (read more on this below).\n\nRebilly also offers JSON Web Tokens (JWT) authentication, where you can control\nthe specific granular permissions and expiration for that JWT.  We call our resource\nfor generating JWT Sessions.\n\nNever share your secret keys. Keep them guarded and secure.\n\n<!-- ReDoc-Inject: <security-definitions> -->\n"
+  },
+  "host": "api.rebilly.com",
+  "basePath": "/v2.1",
+  "schemes": [
+    "https"
+  ],
+  "x-servers": [
+    {
+      "url": "//api.rebilly.com/v2.1",
+      "description": "Live Server"
+    },
+    {
+      "url": "//api-sandbox.rebilly.com/v2.1",
+      "description": "Sandbox Server"
+    }
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "Checkout Pages",
+      "description": "Hosted checkout pages can be configured here.  You can customize the theme\nand content and more that appears on your hosted checkout pages.\n"
+    }
+  ],
+  "securityDefinitions": {
+    "ApiKey": {
+      "description": "When you sign up for an account, you are given your first API key.\nTo do so please follow this link: https://www.rebilly.com/site/signup/\nAlso you can generate additional API keys, and delete API keys (as you may\nneed to rotate your keys in the future).\n",
+      "name": "REB-APIKEY",
+      "type": "apiKey",
+      "in": "header"
+    },
+    "JWT": {
+      "description": "You can create a JSON Web Token (JWT) via our Sessions resource.\n",
+      "type": "basic"
+    },
+    "RebAuth": {
+      "description": "Only for the Tokens resource.\nThe REB-AUTH value is created in this way\nGenerate a Nonce (random string), and a Timestamp (unix timestamp)\nConcatenate the values of ApiUser, Nonce, and Timestamp (in that order).\nUse that value as the input data when you calculate the <a href=\"http://tools.ietf.org/html/rfc2104\">HMAC-SHA1</a> with your secret key, called the signature.\nForming the four data points into a JSON object.\n\n```json\n{\n  \"REB-APIUSER\": \"abcdefg\",\n  \"REB-NONCE\": \"adfsjtreitou345fgkdafgj\",\n  \"REB-TIMESTAMP\": \"1382591345\",\n  \"REB-SIGNATURE\": \"a234fc95460401cfg09c9d09\"\n}\n```\n\nThen base64 encode that JSON object. This is the final value of the REB-AUTH HTTP header\n",
+      "name": "REB-AUTH",
+      "type": "apiKey",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "JWT": []
+    }
+  ],
+  "responses": {
+    "AccessForbidden": {
+      "description": "Access forbidden, invalid API-KEY was used",
+      "schema": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "NotFound": {
+      "description": "Resource was not found",
+      "schema": {
+        "$ref": "#/definitions/Error"
+      }
+    }
+  },
+  "parameters": {
+    "resourceId": {
+      "name": "id",
+      "in": "path",
+      "description": "The resource identifier string",
+      "type": "string",
+      "required": true
+    }
+  },
+  "paths": {
+    "/checkout-pages": {
+      "get": {
+        "tags": [
+          "Checkout Pages"
+        ],
+        "summary": "Browse a list of checkout pages",
+        "description": "Browse a list of checkout pages\n",
+        "responses": {
+          "200": {
+            "description": "A list of checkout pages was retrieved successfully",
+            "headers": {
+              "Rate-Limit-Limit": {
+                "description": "The number of allowed requests in the current period",
+                "type": "integer"
+              },
+              "Rate-Limit-Remaining": {
+                "description": "The number of remaining requests in the current period",
+                "type": "integer"
+              },
+              "Rate-Limit-Reset": {
+                "description": "The date in format defined by [RFC 822](https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1)\nwhen the current period will reset\n",
+                "type": "string"
+              },
+              "Pagination-Total": {
+                "description": "Total items count",
+                "type": "integer"
+              },
+              "Pagination-Limit": {
+                "description": "Items per page limit",
+                "type": "integer"
+              },
+              "Pagination-Offset": {
+                "description": "Pagination offset",
+                "type": "integer"
+              }
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CheckoutPage"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/responses/AccessForbidden"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Checkout Pages"
+        ],
+        "summary": "Add a Checkout Page",
+        "description": "Add a Checkout Page\n",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Checkout Page resource",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CheckoutPage"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Checkout Page was created",
+            "headers": {
+              "Rate-Limit-Limit": {
+                "description": "The number of allowed requests in the current period",
+                "type": "integer"
+              },
+              "Rate-Limit-Remaining": {
+                "description": "The number of remaining requests in the current period",
+                "type": "integer"
+              },
+              "Rate-Limit-Reset": {
+                "description": "The date in format defined by [RFC 822](https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1)\nwhen the current period will reset\n",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/CheckoutPage"
+            }
+          },
+          "401": {
+            "$ref": "#/responses/AccessForbidden"
+          },
+          "422": {
+            "description": "Invalid data was sent",
+            "schema": {
+              "$ref": "#/definitions/InvalidError"
+            }
+          }
+        }
+      }
+    },
+    "/checkout-pages/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/resourceId"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Checkout Pages"
+        ],
+        "summary": "Read a Checkout Page",
+        "description": "Read a Checkout Page.\n",
+        "responses": {
+          "200": {
+            "description": "Checkout Page was retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/CheckoutPage"
+            }
+          },
+          "401": {
+            "$ref": "#/responses/AccessForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Checkout Pages"
+        ],
+        "summary": "Edit a Checkout Page",
+        "description": "Edit a Checkout Page.\n",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Checkout Page resource",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CheckoutPage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Checkout Page was updated",
+            "headers": {
+              "Rate-Limit-Limit": {
+                "description": "The number of allowed requests in the current period",
+                "type": "integer"
+              },
+              "Rate-Limit-Remaining": {
+                "description": "The number of remaining requests in the current period",
+                "type": "integer"
+              },
+              "Rate-Limit-Reset": {
+                "description": "The date in format defined by [RFC 822](https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1)\nwhen the current period will reset\n",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/CheckoutPage"
+            }
+          },
+          "201": {
+            "description": "Checkout Page was created",
+            "headers": {
+              "Rate-Limit-Limit": {
+                "description": "The number of allowed requests in the current period",
+                "type": "integer"
+              },
+              "Rate-Limit-Remaining": {
+                "description": "The number of remaining requests in the current period",
+                "type": "integer"
+              },
+              "Rate-Limit-Reset": {
+                "description": "The date in format defined by [RFC 822](https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1)\nwhen the current period will reset\n",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/CheckoutPage"
+            }
+          },
+          "401": {
+            "$ref": "#/responses/AccessForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "description": "Invalid data was sent",
+            "schema": {
+              "$ref": "#/definitions/InvalidError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Checkout Pages"
+        ],
+        "summary": "Delete a Checkout Page",
+        "description": "Delete a Checkout Page.\n",
+        "responses": {
+          "204": {
+            "headers": {
+              "Rate-Limit-Limit": {
+                "description": "The number of allowed requests in the current period",
+                "type": "integer"
+              },
+              "Rate-Limit-Remaining": {
+                "description": "The number of remaining requests in the current period",
+                "type": "integer"
+              },
+              "Rate-Limit-Reset": {
+                "description": "The date in format defined by [RFC 822](https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1)\nwhen the current period will reset\n",
+                "type": "string"
+              }
+            },
+            "description": "Checkout Page was deleted"
+          },
+          "401": {
+            "$ref": "#/responses/AccessForbidden"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "409": {
+            "description": "Checkout page cannot be deleted"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CheckoutPage": {
+      "type": "object",
+      "required": [
+        "planId",
+        "websiteId",
+        "urlPathSegment",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "description": "Checkout page identifier string",
+          "readOnly": true,
+          "allOf": [
+            {
+              "$ref": "#/definitions/ResourceId"
+            }
+          ]
+        },
+        "planId": {
+          "description": "Checkout page plan ID.  If the plan is deactivated, the submit button on the checkout page will be deactivated and the page will display \"Sold Out.\"",
+          "type": "string",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ResourceId"
+            }
+          ]
+        },
+        "websiteId": {
+          "description": "Checkout page website ID",
+          "type": "string",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ResourceId"
+            }
+          ]
+        },
+        "urlPathSegment": {
+          "description": "Your own custom url path segment for this Checkout Page. It will be appended to checkout url https://checkout.rebilly.com/checkout/`urlPathSegment`",
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 50
+        },
+        "name": {
+          "description": "Checkout page name, used for internal display to help you organize your various checkout pages.",
+          "type": "string",
+          "maxLength": 100
+        },
+        "redirect": {
+          "type": "object",
+          "description": "After a successful checkout, the customer can optionally be redirected to a url of your choice.",
+          "properties": {
+            "url": {
+              "description": "After a successful checkout, the customer can be redirected to a url of your choice.  If left empty, the customer will remain on the thank you page.",
+              "type": "string"
+            },
+            "timeout": {
+              "description": "The time (in seconds) that the customer will remain on the thank you page before being redirected to the corresponding `url`.",
+              "type": "integer",
+              "default": 5
+            }
+          }
+        },
+        "isCustomCustomerIdAllowed": {
+          "description": "Set to true if you want to supply your own customer ID's in a querystring parameter on your checkout page.",
+          "type": "boolean",
+          "default": false
+        },
+        "isBillingAddressHidden": {
+          "description": "Set to true if you want to hide billing address on your checkout page.",
+          "type": "boolean",
+          "default": false
+        },
+        "isPlanSummaryHidden": {
+          "description": "Set to true if you want to hide plan summary on your checkout page.",
+          "type": "boolean",
+          "default": false
+        },
+        "oneTimeOffer": {
+          "type": "object",
+          "description": "One time offer for checkout page.",
+          "properties": {
+            "planId": {
+              "description": "Reference to Plan ID.",
+              "type": "string",
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ResourceId"
+                }
+              ]
+            },
+            "isTiedToQuantity": {
+              "description": "Set to true if you want to tie one time offer to quantity on your checkout page.",
+              "type": "boolean",
+              "default": false
+            }
+          }
+        },
+        "thankYouOneTimeOffer": {
+          "type": "object",
+          "description": "One time offer for thank you page.",
+          "properties": {
+            "planId": {
+              "description": "Reference to Plan ID.",
+              "type": "string",
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ResourceId"
+                }
+              ]
+            },
+            "isTiedToQuantity": {
+              "description": "Set to true if you want to tie one time offer to quantity on your checkout page.",
+              "type": "boolean",
+              "default": false
+            }
+          }
+        },
+        "suggestedUpgrade": {
+          "type": "object",
+          "description": "Suggested upgrade for checkout page.",
+          "properties": {
+            "planId": {
+              "description": "Reference to Plan ID.",
+              "type": "string",
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ResourceId"
+                }
+              ]
+            },
+            "hasProration": {
+              "description": "Set to true if you want to pro rata credits given due change a subscription's plan.",
+              "type": "boolean",
+              "default": false
+            }
+          }
+        },
+        "theme": {
+          "description": "Select from pre-designed themes for your checkout page.",
+          "type": "string",
+          "default": "classic",
+          "enum": [
+            "classic",
+            "long-copy"
+          ]
+        },
+        "quantityLabel": {
+          "description": "Checkout page quantity label, used in case you want to customize the quantity field label.",
+          "type": "string",
+          "maxLength": 255
+        },
+        "quantityType": {
+          "description": "Checkout page quantity type, used in case you want to customize the quantity field type.",
+          "type": "string",
+          "enum": [
+            "selectbox",
+            "textinput"
+          ],
+          "default": "selectbox"
+        },
+        "quantityMin": {
+          "description": "Checkout page quantity min, used in case you want to set the minimun quantity.",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 255
+        },
+        "markup": {
+          "description": "Sections of styled content that will display within the page body, keyed by \"section.\"\nThe themes rely on specific \"section\" key values, for example \"header\", \"button\", \"footer\", \"body\", \"thank-you\", \"terms\".\n",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/Section"
+          }
+        },
+        "fields": {
+          "description": "Take granular control over the default field settings.  You can make specific fields hidden, optional, or required.  You can specify labels and default values.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/FieldConfig"
+          }
+        },
+        "taxes": {
+          "type": "object",
+          "description": "Taxes, you can specify description and list of name-value items.",
+          "properties": {
+            "description": {
+              "description": "Taxes description.",
+              "type": "string"
+            },
+            "items": {
+              "description": "Taxes values.",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Taxes"
+              }
+            }
+          }
+        },
+        "status": {
+          "description": "If `inactive`, the checkout page url will result in a 404.",
+          "type": "string",
+          "enum": [
+            "active",
+            "inactive"
+          ],
+          "default": "active"
+        },
+        "_links": {
+          "type": "array",
+          "description": "The links related to resource",
+          "readOnly": true,
+          "minItems": 1,
+          "items": [
+            {
+              "$ref": "#/definitions/SelfLink"
+            }
+          ]
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 600
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "InvalidError": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Error"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "details": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "NewLink": {
+      "type": "object",
+      "properties": {
+        "href": {
+          "description": "The link URL",
+          "type": "string"
+        }
+      },
+      "required": [
+        "href"
+      ]
+    },
+    "ResourceId": {
+      "type": "string",
+      "description": "The resource ID. Defaults to UUID v4",
+      "maxLength": 50,
+      "example": "4f6cf35x-2c4y-483z-a0a9-158621f77a21"
+    },
+    "SelfLink": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/NewLink"
+        }
+      ],
+      "properties": {
+        "rel": {
+          "description": "The link type",
+          "type": "string",
+          "enum": [
+            "self"
+          ]
+        }
+      },
+      "required": [
+        "rel"
+      ]
+    },
+    "FieldConfig": {
+      "type": "object",
+      "description": "A configuration for a field.",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "description": "The name of the field, as defined in our APIs. You can also include custom fields.\n",
+          "type": "string",
+          "enum": [
+            "companyName",
+            "phoneNumber",
+            "addressLine2",
+            "couponCode",
+            "quantity"
+          ]
+        },
+        "setting": {
+          "description": "If you want the field hidden, optional, or required.  Some fields may be required by a specific theme, and these settings will not override that.\nDefaults are that most fields are shown.  You may wish to hide `couponCode`, if you don't use coupons.  You may wish to require specific fields\nthat are optional (eg `phoneNumber`).\n",
+          "type": "string",
+          "enum": [
+            "hidden",
+            "optional",
+            "required"
+          ]
+        },
+        "label": {
+          "description": "If you want to override the default label, you can set a value here (eg, instead of \"First Name\", you can set \"Given Name\").",
+          "type": "string"
+        },
+        "default": {
+          "description": "Set a default value for the field.  It will default to being empty, or 1 for `quantity`.",
+          "type": "string"
+        }
+      }
+    },
+    "Section": {
+      "type": "object",
+      "required": [
+        "section",
+        "content",
+        "style",
+        "enabled"
+      ],
+      "properties": {
+        "section": {
+          "description": "A key for this section of content.\n",
+          "type": "string",
+          "enum": [
+            "header",
+            "body",
+            "order-summary",
+            "button",
+            "footer",
+            "thank-you",
+            "terms"
+          ]
+        },
+        "style": {
+          "description": "Control the font and background colors.",
+          "$ref": "#/definitions/Style"
+        },
+        "content": {
+          "description": "The text you want to appear in the section, can be styled in html markup.  You can include image references.",
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Set to false if you want to disable this markup section on checkout page.",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "Style": {
+      "type": "object",
+      "properties": {
+        "background": {
+          "description": "Background color for the section in hexadecimal format.",
+          "type": "string",
+          "maxLength": 6,
+          "default": "ffffff"
+        },
+        "color": {
+          "description": "Font color for the section in hexadecimal format.",
+          "type": "string",
+          "maxLength": 6,
+          "default": "cccccc"
+        }
+      }
+    },
+    "Taxes": {
+      "type": "object",
+      "description": "A configuration for a tax.",
+      "required": [
+        "label",
+        "value"
+      ],
+      "properties": {
+        "label": {
+          "description": "Tax name",
+          "type": "string"
+        },
+        "value": {
+          "description": "Value of tax.",
+          "type": "number",
+          "format": "float"
+        }
+      }
+    }
+  }
+}
